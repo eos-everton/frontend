@@ -1,0 +1,24 @@
+<div *ngIf="items.length === 0">Não há itens disponíveis.</div>
+
+<table *ngIf="items.length > 0" class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Descrição</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items">
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.description }}</td>
+      <td>
+        <button class="btn btn-info">Editar</button>
+        <button class="btn btn-danger">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+

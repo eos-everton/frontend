@@ -1,0 +1,19 @@
+<div class="edit-container">
+  <h2>Edit</h2>
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" [(ngModel)]="item.name" name="name" required />
+  </div>
+  <div>
+    <label for="description">description</label>
+    <input
+      type="text"
+      id="description"
+      [(ngModel)]="item.description"
+      name="description"
+      required
+    />
+  </div>
+  <button (click)="editItems()">Salvar</button>
+  <button (click)="cancel()">Cancelar</button>
+</div>

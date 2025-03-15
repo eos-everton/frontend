@@ -13,25 +13,22 @@ export class ItemService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(this.apiUrl, { headers });
   }
-
-  createItem(item: any): Observable<any> {
+  createItem(name: string, description: string): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(this.apiUrl, item, { headers });
-
+    const createItem = { name, description };
+    return this.http.post(this.apiUrl, createItem, { headers });
   }
 
-  updateItem(id: number, item: any): Observable<any> {
+  updateItem(item: any): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.put(`${this.apiUrl}/${id}`, item, { headers });
-
+    return this.http.put(`${this.apiUrl}/${item.id}`, item, { headers });
   }
 
   deleteItem(id: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.delete(`${this.apiUrl}/${id}`, { headers });
-
   }
 }

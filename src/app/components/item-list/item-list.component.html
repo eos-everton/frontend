@@ -1,24 +1,37 @@
 <div *ngIf="items.length === 0">Não há itens disponíveis.</div>
+<div class="table-form" *ngIf="!isTableIn">
+  <table *ngIf="(items.length > 0)" class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.description }}</td>
+        <td>
+          <button (click)="editItem(item)" class="btn btn-info">Editar</button>
+          <button (click)="deleteItems(item.id)" class="btn btn-danger">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="addItems()" class="btn btn-info">add item</button>
+</div>
+<div class="item-form" *ngIf="isItemsIn">
+  <app-item-form></app-item-form>
+</div>
 
-<table *ngIf="items.length > 0" class="table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nome</th>
-      <th>Descrição</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of items">
-      <td>{{ item.id }}</td>
-      <td>{{ item.name }}</td>
-      <td>{{ item.description }}</td>
-      <td>
-        <button class="btn btn-info">Editar</button>
-        <button class="btn btn-danger">Excluir</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<app-item-form-edit
+  *ngIf="selectedItem"
+  [item]="selectedItem"
+  (itemUpdated)="onItemUpdated($event)"
+  (cancelEdit)="cancelEdit()">
+</app-item-form-edit>
+
 

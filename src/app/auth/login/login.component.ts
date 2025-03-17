@@ -12,9 +12,21 @@ import { FormsModule } from '@angular/forms';
 export class LoginComponent {
   email: string = '';
   password: string = '';
-
+  isLoggedIn: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.isLoggedIn = this.authService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.router.navigate(['/items']);
+    }
+  }
+
+  register() {
+    this.isLoggedIn = true;
+    this.router.navigate(['/register']);
+  }
 
   login() {
     this.authService.login(this.email, this.password).subscribe({
@@ -22,12 +34,10 @@ export class LoginComponent {
         console.log('Login bem-sucedido', res);
         localStorage.setItem('token', res.token);
         this.router.navigate(['/items']).then(() => {
-          location.reload();
+          window.location.reload();
         });
       },
       error: () => alert('Login inválido!'),
     });
   }
-
-  
 }

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { LoginComponent } from "./auth/login/login.component";
 import { CommonModule } from '@angular/common';
+import { AuthService } from './services/auth.service';
 
 
 @Component({
@@ -10,29 +11,24 @@ import { CommonModule } from '@angular/common';
   imports: [LoginComponent, RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
   title = 'frontend';
   isLoggedIn: boolean = false;
 
-  constructor(private router: Router) {
-    this.isLoggedIn = !!localStorage.getItem('token');
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  onLoginSuccess() {
-    this.isLoggedIn = true;
-  }
-
-  register() {
-    this.isLoggedIn = true;
-    this.router.navigate(['/register']);
+  ngOnInit() {
+    this.isLoggedIn = this.authService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.router.navigate(['/items']);
+    }
   }
 
   logout() {
-    localStorage.removeItem('token');
+    this.authService.logout();
     this.isLoggedIn = false;
-    this.router.navigate(['/login']).then(() => {
-      location.reload();
-    });
+    this.router.navigate(['/login']);
   }
 }

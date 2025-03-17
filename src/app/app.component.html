@@ -2,8 +2,8 @@
   <button (click)="logout()">Logout</button>
   <router-outlet></router-outlet>
 </div>
-<div *ngIf="!isLoggedIn">
-  <app-login></app-login>
-  <button (click)="register()">Registrar</button>
-</div>
 
+<div *ngIf="!isLoggedIn" class="login">
+  <app-login>
+  </app-login>
+</div>
